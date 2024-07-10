@@ -1851,7 +1851,10 @@ def changeHandler(evt) {
         case 'hsmAlert':
             deviceid = "alarmSystemStatus_${location?.id}"
             attr = 'alarmSystemStatus'
-            if (value?.toString()?.startsWith('intrusion')) {
+            if (value?.toString() == 'intrusion-delay') {
+            // Handle 'intrusion-delay' case separately
+            sendEvt = false
+            } else if (value?.toString()?.startsWith('intrusion')) {
                 sendItems.push([evtSource: src, evtDeviceName: deviceName, evtDeviceId: deviceid, evtAttr: attr, evtValue: getAlarmIntrusionMode(), evtUnit: evt?.unit ?: sBLANK, evtDate: dt])
             } else if (value?.toString() == 'cancel') {
                 sendItems.push([evtSource: src, evtDeviceName: deviceName, evtDeviceId: deviceid, evtAttr: attr, evtValue: getSecurityStatus(), evtUnit: evt?.unit ?: sBLANK, evtDate: dt])
